@@ -47,14 +47,24 @@ var PreviewImage = {
       _this.image.src = this.src;
       var h = window.screen.height;
       var w = window.screen.width;
-      if (this.height / this.width > h / w) {
-        //长宽比大于于屏幕尺寸的长宽比的时候，高度为100%，宽度则通过缩放计算
-        var width = h / this.height * this.height;
-        _this.image.style.left = w / 2 - width / 2 + 'px';
-      } else {
-        //长宽比小于屏幕尺寸的长宽比的时候，宽度为100%，高度则通过缩放计算
-        var height = w / this.width * this.height;
-        _this.image.style.top = h / 2 - height / 2 + 'px';
+      if (this.height / this.width > h / w) { //长宽比大于于屏幕尺寸的长宽比的时候，高度为100%，宽度则通过缩放计算
+        //图片太小時居中
+        if (this.width < w) {
+          _this.image.style.left = w / 2 - this.width / 2 + 'px';
+          _this.image.style.top = h / 2 - this.height / 2 + 'px';
+        } else {
+          var width = h / this.height * this.height;
+          _this.image.style.left = w / 2 - width / 2 + 'px';
+        }
+      } else { //长宽比小于屏幕尺寸的长宽比的时候，宽度为100%，高度则通过缩放计算
+        //图片太小時居中
+        if (this.width < w) {
+          _this.image.style.left = w / 2 - this.width / 2 + 'px';
+          _this.image.style.top = h / 2 - this.height / 2 + 'px';
+        } else {
+          var height = w / this.width * this.height;
+          _this.image.style.top = h / 2 - height / 2 + 'px';
+        }
       }
     };
     image.src = this.urls[this.opts.index];
