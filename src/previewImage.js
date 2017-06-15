@@ -56,7 +56,7 @@ var PreviewImage = {
           var width = h / this.height * this.height;
           _this.image.style.left = w / 2 - width / 2 + 'px';
         }
-      } else { //长宽比小于屏幕尺寸的长宽比的时候，宽度为100%，高度则通过缩放计算
+      } else if (this.height / this.width < h / w) { //长宽比小于屏幕尺寸的长宽比的时候，宽度为100%，高度则通过缩放计算
         //图片太小時居中
         if (this.width < w) {
           _this.image.style.left = w / 2 - this.width / 2 + 'px';
@@ -64,6 +64,14 @@ var PreviewImage = {
         } else {
           var height = w / this.width * this.height;
           _this.image.style.top = h / 2 - height / 2 + 'px';
+        }
+      } else {
+        if (this.width < w) {
+          _this.image.style.left = w / 2 - this.width / 2 + 'px';
+          _this.image.style.top = h / 2 - this.height / 2 + 'px';
+        } else {
+          _this.image.style.left = '0px';
+          _this.image.style.top = '0px';
         }
       }
     };
@@ -84,7 +92,7 @@ var PreviewImage = {
     } else if (touch.clientX - this.start.x > this.opts.offset && this.opts.index !== 0) {
       this.lastImage();
     } else {
-      const distance = Math.pow(this.start.x - touch.clientX, 2) + Math.pow(this.start.y - touch.clientY, 2);
+      var distance = Math.pow(this.start.x - touch.clientX, 2) + Math.pow(this.start.y - touch.clientY, 2);
       //滑动距离不超过10像素，且时间小于300ms则隐藏图片
       if (distance < Math.pow(10, 2) && new Date().getTime() - this.start.time < 300) {
         this.removeItems();
