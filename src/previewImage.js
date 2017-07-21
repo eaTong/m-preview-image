@@ -3,20 +3,20 @@
  */
 
 var PreviewImage = {
-  urls: [],
+  images: [],
   opts: {
     index: 0,
     offset: 75
   },
   start: {},
   moveIndex: 0,
-  preview: function (urls, options) {
-    if (!urls || !Array.isArray(urls)) {
-      console.error('urls is required,and type should be Array!');
+  preview: function (images, options) {
+    if (!images || !Array.isArray(images)) {
+      console.error('images is required,and type should be Array!');
       return false;
     } else {
       options = options || {};
-      this.urls = urls;
+      this.images = images;
       for (var i in options) {
         this.opts[i] = options[i];
       }
@@ -26,7 +26,7 @@ var PreviewImage = {
   init: function () {
     this.container = document.createElement('div');
     this.container.className = 'preview-image-container';
-    this.container.innerHTML = '<div class="shadow"></div><img class="image"/>';
+    this.container.innerHTML = '<div class="shadow"></div><img class="image"/><div class="optional-render"></div>';
     document.body.appendChild(this.container);
     this.loadImage();
     this.container.addEventListener('touchstart', this.handlerTouchStart.bind(this));
@@ -75,7 +75,12 @@ var PreviewImage = {
         }
       }
     };
-    image.src = this.urls[this.opts.index];
+    var img = this.images[this.opts.index];
+    image.src = typeof img === 'string' ? img : img.url;
+    if (typeof img !== 'string' && img.optionalRender) {
+      console.log(111);
+      this.container.getElementsByClassName('optional-render')[0].innerHTML = img.optionalRender;
+    }
   },
   handlerTouchStart: function (event) {
     //暂时只处理上下
@@ -87,7 +92,7 @@ var PreviewImage = {
   },
   handlerTouchEnd: function (event) {
     var touch = event.changedTouches[0];
-    if (touch.clientX - this.start.x < 0 - this.opts.offset && this.opts.index !== this.urls.length - 1) {
+    if (touch.clientX - this.start.x < 0 - this.opts.offset && this.opts.index !== this.images.length - 1) {
       this.nextImage();
     } else if (touch.clientX - this.start.x > this.opts.offset && this.opts.index !== 0) {
       this.lastImage();
