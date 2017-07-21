@@ -6,7 +6,8 @@ var PreviewImage = {
   images: [],
   opts: {
     index: 0,
-    offset: 75
+    offset: 75,
+    clickToHide: true,//sometime you may not want your customer to close the preview themselves , then you may give me `false`
   },
   start: {},
   moveIndex: 0,
@@ -100,7 +101,9 @@ var PreviewImage = {
       var distance = Math.pow(this.start.x - touch.clientX, 2) + Math.pow(this.start.y - touch.clientY, 2);
       //滑动距离不超过10像素，且时间小于300ms则隐藏图片
       if (distance < Math.pow(10, 2) && new Date().getTime() - this.start.time < 300) {
-        this.removeItems();
+        if (this.opts.clickToHide) {
+          this.removeItems();
+        }
       } else {
         this.image.style.transform = 'translateX(0px)';
       }
