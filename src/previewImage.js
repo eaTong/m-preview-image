@@ -8,6 +8,7 @@ var PreviewImage = {
     index: 0,
     offset: 75,
     clickToHide: true,//sometime you may not want your customer to close the preview themselves , then you may give me `false`
+    containerEle: document.body,//use your own container
   },
   start: {},
   moveIndex: 0,
@@ -28,7 +29,7 @@ var PreviewImage = {
     this.container = document.createElement('div');
     this.container.className = 'preview-image-container';
     this.container.innerHTML = '<div class="shadow"></div><img class="image"/><div class="optional-render"></div>';
-    document.body.appendChild(this.container);
+    this.opts.containerEle.appendChild(this.container);
     this.loadImage();
     this.container.addEventListener('touchstart', this.handlerTouchStart.bind(this));
     this.container.addEventListener('touchmove', this.handlerTouchMove.bind(this));
@@ -54,8 +55,8 @@ var PreviewImage = {
           _this.image.style.left = w / 2 - this.width / 2 + 'px';
           _this.image.style.top = h / 2 - this.height / 2 + 'px';
         } else {
-          var width = h / this.height * this.height;
-          _this.image.style.left = w / 2 - width / 2 + 'px';
+          const width = h / this.height * this.width;
+          _this.image.style.left = w / 2 -  width/ 2 + 'px';
         }
       } else if (this.height / this.width < h / w) { //长宽比小于屏幕尺寸的长宽比的时候，宽度为100%，高度则通过缩放计算
         //图片太小時居中
@@ -63,8 +64,8 @@ var PreviewImage = {
           _this.image.style.left = w / 2 - this.width / 2 + 'px';
           _this.image.style.top = h / 2 - this.height / 2 + 'px';
         } else {
-          var height = w / this.width * this.height;
-          _this.image.style.top = h / 2 - height / 2 + 'px';
+          const height = w / this.width * this.height;
+          _this.image.style.top = h / 2 - height/ 2   + 'px';
         }
       } else {
         if (this.width < w) {
@@ -73,15 +74,17 @@ var PreviewImage = {
         } else {
           _this.image.style.left = '0px';
           _this.image.style.top = '0px';
+          _this.image.style.width = '100%';
+          _this.image.style.height = '100%';
         }
       }
     };
     var img = this.images[this.opts.index];
     image.src = typeof img === 'string' ? img : img.url;
     if (typeof img !== 'string' && img.optionalRender) {
-      console.log(111);
       this.container.getElementsByClassName('optional-render')[0].innerHTML = img.optionalRender;
     }
+    this.opts.onChangePic && this.opts.onChangePic(this.opts.index, this.images.length);
   },
   handlerTouchStart: function (event) {
     //暂时只处理上下
