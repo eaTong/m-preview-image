@@ -38,7 +38,9 @@ urls can also be a list of object , when you give me a list of object , key of u
       }
     ];
       
-param `optionalRender` can allows you DIY you own render,such as render your own progress
+param `optionalRender` can allows you DIY you own render,such as render your own progress.
+
+`optionalRender`can now auto replace `{index}` to current index , `{total}` to tatal length of all url,or you can pass a function and return the html you want to render
    
     
 

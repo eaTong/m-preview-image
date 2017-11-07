@@ -47,16 +47,17 @@ var PreviewImage = {
     var image = new Image();
     image.onload = function () {
       _this.image.src = this.src;
-      var h = window.screen.height;
-      var w = window.screen.width;
+      var h = document.documentElement.clientHeight;
+      var w = document.documentElement.clientWidth;
       if (this.height / this.width > h / w) { //长宽比大于于屏幕尺寸的长宽比的时候，高度为100%，宽度则通过缩放计算
         //图片太小時居中
         if (this.width < w) {
           _this.image.style.left = w / 2 - this.width / 2 + 'px';
           _this.image.style.top = h / 2 - this.height / 2 + 'px';
         } else {
-          const width = h / this.height * this.width;
-          _this.image.style.left = w / 2 -  width/ 2 + 'px';
+          var width = h / this.height * this.width;
+          _this.image.style.left = w / 2 - width / 2 + 'px';
+          _this.image.style.top = 0;
         }
       } else if (this.height / this.width < h / w) { //长宽比小于屏幕尺寸的长宽比的时候，宽度为100%，高度则通过缩放计算
         //图片太小時居中
@@ -64,8 +65,10 @@ var PreviewImage = {
           _this.image.style.left = w / 2 - this.width / 2 + 'px';
           _this.image.style.top = h / 2 - this.height / 2 + 'px';
         } else {
-          const height = w / this.width * this.height;
-          _this.image.style.top = h / 2 - height/ 2   + 'px';
+          var height = w / this.width * this.height;
+          _this.image.style.top = h / 2 - height / 2 + 'px';
+          _this.image.style.left = 0;
+
         }
       } else {
         if (this.width < w) {
@@ -82,7 +85,14 @@ var PreviewImage = {
     var img = this.images[this.opts.index];
     image.src = typeof img === 'string' ? img : img.url;
     if (typeof img !== 'string' && img.optionalRender) {
-      this.container.getElementsByClassName('optional-render')[0].innerHTML = img.optionalRender;
+      var optRender = '';
+      if (typeof img.optionalRender === 'string') {
+
+        optRender = img.optionalRender.replace('{index}', this.opts.index + 1).replace('{total}', this.images.length);
+      } else if (typeof img.optionalRender === 'function') {
+        optRender = img.optionalRender(this.opts.index, this.images.length);
+      }
+      this.container.getElementsByClassName('optional-render')[0].innerHTML = optRender;
     }
     this.opts.onChangePic && this.opts.onChangePic(this.opts.index, this.images.length);
   },
