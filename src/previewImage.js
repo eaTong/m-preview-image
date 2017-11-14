@@ -105,6 +105,7 @@ var PreviewImage = {
     this.image.style.transform = 'translateX(' + (touche.clientX - this.start.x) + 'px)';
   },
   handlerTouchEnd: function (event) {
+    event.preventDefault();
     var touch = event.changedTouches[0];
     if (touch.clientX - this.start.x < 0 - this.opts.offset && this.opts.index !== this.images.length - 1) {
       this.nextImage();
