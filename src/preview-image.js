@@ -52,6 +52,7 @@
     opts.containerEle.appendChild(container);
     galleryContainer = document.getElementById('preview-image-container');
     galleryContainer.style.width = opts.urls.length + '00vw';
+    setOptionalRender(currentIndex);
 
     galleryContainer.addEventListener('touchstart', handlerTouchStart);
     galleryContainer.addEventListener('touchmove', handlerTouchMove);
@@ -63,7 +64,6 @@
     for (var index in opts.urls) {
       str += '<div class="image-cover ' + opts.transition + '" id="preview-image-container-id' + index + '">' +
         '<img src="' + getImageStr(index) + '"/>' +
-        '<div class="optional-render"></div>' +
         '</div>';
     }
     return str;
@@ -75,6 +75,20 @@
       return typeof item === 'string' ? item : item[opts.urlLabel || 'url'];
     } else {
       return opts.picUrl;
+    }
+  }
+
+  function setOptionalRender(index) {
+    const item = opts.urls[index];
+    console.log(item.optionalRender);
+    if (typeof item !== 'string' && item.optionalRender) {
+      var optRender = '';
+      if (typeof item.optionalRender === 'string') {
+        optRender = item.optionalRender.replace('{index}', index + 1).replace('{total}', opts.urls.length);
+      } else if (typeof item.optionalRender === 'function') {
+        optRender = item.optionalRender(index, opts.urls.length);
+      }
+      container.getElementsByClassName('optional-render')[0].innerHTML = optRender;
     }
   }
 
@@ -112,6 +126,7 @@
   function jumpToIndex(index) {
     galleryContainer.style.transition = 'transform 100ms';
     galleryContainer.style.transform = 'translateX(' + (-index * window.screen.width) + 'px)';
+    setOptionalRender(index);
   }
 
   function removeItems() {

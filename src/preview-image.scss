@@ -10,7 +10,7 @@
   .preview-image-container {
     height: 100vh;
     position: relative;
-    z-index: 99;
+    z-index: 9;
     .image-cover {
       width: 100vw;
       height: 100vh;
@@ -26,6 +26,21 @@
         height: auto;
       }
     }
+  }
+
+  .optional-render {
+    width: 90vw;
+    height: auto;
+    border-radius: 5px;
+    background: #333;
+    color: #fff;
+    position: fixed;
+    bottom: 10px;
+    padding: 15px;
+    left: 5vw;
+    box-sizing: border-box;
+    z-index: 99;
+
   }
 }
 
