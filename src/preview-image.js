@@ -105,7 +105,7 @@ function jumpToIndex(index) {
   ensurePictureVisible(index);
   if (opts.smoothly) {
     ensurePictureVisible(Math.max(0, index - 1));
-    ensurePictureVisible(Math.min(index + 1, opts.urls.length));
+    ensurePictureVisible(Math.min(index + 1, opts.urls.length - 1));
   }
 }
 

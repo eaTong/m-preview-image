@@ -14,9 +14,12 @@
   var urls = [
     {
       url: 'http://icon.nipic.com/BannerPic/20150821/home/20150821102514.jpg',
+      optionalRender: function (index, total) {
+        return index + '~~~~~' + total
+      }
     }, {
       url: 'http://image.tupian114.com/20140722/20441639.jpg',
-      optionalRender: '22222222'
+      optionalRender: '第{index}张，共{total}张'
     }, {
       url: 'http://image.tupian114.com/20131219/11432580.jpg',
       optionalRender: '33333333'
@@ -46,7 +49,7 @@
     "http://139.129.33.188:8000/file/read/8424,426a140245c811e78eab00163e002820,common",
   ];
   // PreviewImage.preview(urls, {index: 0, clickToHide: false});
-  previewImage({urls: urls, index: 3});
+  previewImage({urls: urls, index: 0});
 </script>
 </body>
 </html>
