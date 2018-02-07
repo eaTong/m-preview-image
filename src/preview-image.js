@@ -127,7 +127,10 @@ function setOptionalRender(index) {
     } else if (typeof item.optionalRender === 'function') {
       optRender = item.optionalRender(index, opts.urls.length);
     }
+    container.getElementsByClassName('optional-render')[0].style.display = 'block';
     container.getElementsByClassName('optional-render')[0].innerHTML = optRender;
+  } else {
+    container.getElementsByClassName('optional-render')[0].style.display = 'none';
   }
 }
 
