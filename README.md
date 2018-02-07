@@ -12,8 +12,10 @@
 - in browser : download and add a tag :`<script src="path-to/preview-image.js">` 
 - using node : 
 > npm i m-preview-image -S 
-
+>
 > const  previewImage = require('m-preview-image');
+
+don't forget to import style :`import "m-preview-image/dist/m-preview-image.css"`
 ## how to use?
 first you should have a url list just like:
   
