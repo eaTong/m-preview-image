@@ -1,10 +1,10 @@
 {
   "name": "m-preview-image",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "preview image in mobile",
   "main": "src/preview-image.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "webpack --env dev && webpack --env build"
   },
   "repository": {
     "type": "git",
@@ -20,5 +20,15 @@
   "bugs": {
     "url": "https://github.com/eaTong/m-preview-image/issues"
   },
-  "homepage": "https://github.com/eaTong/m-preview-image#readme"
+  "homepage": "https://github.com/eaTong/m-preview-image#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.3",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^1.6.1",
+    "webpack": "^3.10.0",
+    "yargs": "^10.0.3"
+  }
 }

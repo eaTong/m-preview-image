@@ -1,4 +1,6 @@
-# previewImage
+# m-preview-image
+
+`m-preview-image` let you preview image in mobile ,to make sure image is more smooth , `m-preview-image` will auto load three image (current , next and last )
 
 ## browser support 
 - android : 4.4 +
