@@ -2,13 +2,13 @@
   "name": "m-preview-image",
   "version": "2.0.0",
   "description": "preview image in mobile",
-  "main": "dist/index.js",
+  "main": "src/preview-image.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eaTong/previewImage.git"
+    "url": "git+https://github.com/eaTong/m-preview-image.git"
   },
   "keywords": [
     "preview",
@@ -18,7 +18,7 @@
   "author": "eaTong",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/eaTong/previewImage/issues"
+    "url": "https://github.com/eaTong/m-preview-image/issues"
   },
-  "homepage": "https://github.com/eaTong/previewImage#readme"
+  "homepage": "https://github.com/eaTong/m-preview-image#readme"
 }
