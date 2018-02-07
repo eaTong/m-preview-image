@@ -2,6 +2,7 @@
  * Created by eatong on 18-2-7.
  */
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const UglifyJsPlugin = webpack.optimize.UglifyJsPlugin;
 const path = require('path');
 const env = require('yargs').argv.env; // use --env with webpack 2
@@ -9,7 +10,7 @@ const pkg = require('./package.json');
 
 let libraryName = 'previewImage';
 
-let plugins = [], outputFile;
+let plugins = [new CopyWebpackPlugin([{from: 'src/preview-image.css', to: 'preview-image.css'}])], outputFile;
 
 if (env === 'build') {
   plugins.push(new UglifyJsPlugin({minimize: true}));
