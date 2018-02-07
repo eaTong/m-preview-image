@@ -1,5 +1,12 @@
 # previewImage
 
+## browser support 
+- android : 4.4 +
+- ios : 8 +
+- IE mobile : 10+
+
+
+
 ## how to use?
 first you should have a url list just like:
   

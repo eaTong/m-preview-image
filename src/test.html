@@ -9,7 +9,7 @@
   <link rel="stylesheet" href="preview-image.css">
 </head>
 <body>
-<script src="previewImage.js"></script>
+<script src="preview-image.js"></script>
 <script>
   var urls = [
     {
@@ -35,11 +35,19 @@
       optionalRender: '7777777'
     }
   ];
-  var urls2 = ["http://139.129.33.188:8000/file/read/8418,4259c96c45c811e78eab00163e002820,common",
+  var urls2 = [
+    "http://139.129.33.188:8000/file/read/8418,4259c96c45c811e78eab00163e002820,common",
     "http://139.129.33.188:8000/file/read/8421,426209ce45c811e78eab00163e002820,common",
-    "http://139.129.33.188:8000/file/read/8424,426a140245c811e78eab00163e002820,common"
+    "http://139.129.33.188:8000/file/read/8424,426a140245c811e78eab00163e002820,common",
+    "http://139.129.33.188:8000/file/read/8418,4259c96c45c811e78eab00163e002820,common",
+    "http://139.129.33.188:8000/file/read/8421,426209ce45c811e78eab00163e002820,common",
+    "http://139.129.33.188:8000/file/read/8424,426a140245c811e78eab00163e002820,common",
+    "http://139.129.33.188:8000/file/read/8418,4259c96c45c811e78eab00163e002820,common",
+    "http://139.129.33.188:8000/file/read/8421,426209ce45c811e78eab00163e002820,common",
+    "http://139.129.33.188:8000/file/read/8424,426a140245c811e78eab00163e002820,common",
   ];
-  PreviewImage.preview(urls, {index: 0, clickToHide: false});
+  // PreviewImage.preview(urls, {index: 0, clickToHide: false});
+  previewImage({urls: urls});
 </script>
 </body>
 </html>
