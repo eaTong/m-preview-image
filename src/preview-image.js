@@ -153,4 +153,5 @@ function removeItems() {
   galleryContainer = undefined;
 }
 
-export default previewImage;
+// export default previewImage;
+module.exports = previewImage;
