@@ -1,4 +1,4 @@
-@keyframes loading {
+@keyframes m-preview-loading {
   0% {
     transform: rotate(0); }
   100% {
@@ -30,7 +30,7 @@
         width: 30px;
         height: 30px;
         border-radius: 50%;
-        animation: loading 400ms linear infinite; }
+        animation: m-preview-loading 400ms linear infinite; }
       .preview-image-root-container .preview-image-container .image-cover.loading img {
         display: none; }
       .preview-image-root-container .preview-image-container .image-cover img {
