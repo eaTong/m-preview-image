@@ -7,9 +7,11 @@
   <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
   <meta name="renderer" content="webkit">
   <link rel="stylesheet" href="src/preview-image.css">
+
+  <div style="width: 400px;height: 400px" id="container"></div>
 </head>
 <body>
-<script src="dist/previewImage.min.js"></script>
+<script src="src/preview-image.js"></script>
 <script>
   var urls = [
     {
@@ -49,7 +51,7 @@
     "http://139.129.33.188:8000/file/read/8424,426a140245c811e78eab00163e002820,common",
   ];
   // PreviewImage.preview(urls, {index: 0, clickToHide: false});
-  previewImage({urls: urls, index: 0});
+  previewImage({urls: urls, index: 0, containerEle: document.getElementById('container')});
 </script>
 </body>
 </html>

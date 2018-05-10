@@ -45,14 +45,22 @@ function previewImage(options) {
 function initDOM() {
   container = document.createElement('div');
   container.className = 'preview-image-root-container';
-  container.innerHTML = `<div class="preview-image-container" id="preview-image-container">${generateContainer()}</div><div class="optional-render"></div>`;
+  opts.containerEle.style.position = 'relative';
+  opts.containerEle.style.overflow = 'hidden';
+  container.innerHTML = `<div class="preview-image-container" id="preview-image-container">${generateContainer()}</div>\
+                          <div class="optional-render"></div>`;
   opts.containerEle.appendChild(container);
   galleryContainer = document.getElementById('preview-image-container');
-  galleryContainer.style.width = `${opts.urls.length * 100}vw`;
+  galleryContainer.style.width = `${opts.urls.length * opts.containerEle.offsetWidth}px`;
+
 
   galleryContainer.addEventListener('touchstart', handlerTouchStart);
+  galleryContainer.addEventListener('mousedown', handlerTouchStart);
   galleryContainer.addEventListener('touchmove', handlerTouchMove);
+  galleryContainer.addEventListener('mousemove', handlerTouchMove);
   galleryContainer.addEventListener('touchend', handlerTouchEnd);
+  galleryContainer.addEventListener('mouseup', handlerTouchEnd);
+  galleryContainer.addEventListener('mouseout', handlerMoueout);
   // setOptionalRender(currentIndex);
   jumpToIndex(currentIndex);
 }
@@ -60,47 +68,75 @@ function initDOM() {
 function generateContainer() {
   let str = '';
   for (let index in opts.urls) {
-    str += `<div class="image-cover loading ${opts.transition}" id="preview-image-container-id${index}">
-              <img/></div>`;
+    str += `<div class="image-cover loading ${opts.transition}" style="width:${opts.containerEle.offsetWidth}px;height:${opts.containerEle.offsetWidth}px" \
+       id="preview-image-container-id${index}"><img draggable="false"/></div>`;
   }
   return str;
 }
 
 
 function handlerTouchStart(event) {
-  //remove transition when start touch
-  galleryContainer.style.transition = 'none';
-  startPoint = {x: event.touches[0].clientX, y: event.touches[0].clientY, time: new Date().getTime()};
+  if (event.type === 'mousedown') {
+
+    galleryContainer.style.transition = 'none';
+    startPoint = {x: event.x, y: event.y, time: new Date().getTime(), moving: true};
+  } else {
+    galleryContainer.style.transition = 'none';
+    startPoint = {x: event.touches[0].clientX, y: event.touches[0].clientY, time: new Date().getTime(), moving: true};
+  }
 }
 
-function handlerTouchMove() {
-  const touche = event.touches[0];
-  galleryContainer.style.transform = `translateX(${touche.clientX - startPoint.x - currentIndex * window.screen.width}px)`;
+function handlerTouchMove(event) {
+  if (startPoint.moving) {
+    if (event.type === 'mousemove') {
+
+      galleryContainer.style.transform = `translateX(${event.x - startPoint.x - currentIndex * opts.containerEle.offsetWidth}px)`;
+    } else {
+
+      const touche = event.touches[0];
+      galleryContainer.style.transform = `translateX(${touche.clientX - startPoint.x - currentIndex * opts.containerEle.offsetWidth}px)`;
+    }
+  }
+}
+
+function handlerMoueout(event) {
+  startPoint.moving = false;
+  jumpToIndex(currentIndex);
 }
 
 function handlerTouchEnd(event) {
+  startPoint.moving = false;
   event.preventDefault();
-  const touch = event.changedTouches[0];
-  if (touch.clientX - startPoint.x < 0 - opts.offset && currentIndex !== opts.urls.length - 1) {
+  const endPoint = {};
+  if (event.type === 'mouseup') {
+    endPoint.x = event.x;
+    endPoint.y = event.x;
+
+  } else {
+    const touch = event.changedTouches[0];
+    endPoint.x = touch.clientX;
+    endPoint.y = touch.clientY;
+  }
+  if (endPoint.x - startPoint.x < 0 - opts.offset && currentIndex !== opts.urls.length - 1) {
     jumpToIndex(++currentIndex);
-  } else if (touch.clientX - startPoint.x > opts.offset && currentIndex !== 0) {
+  } else if (endPoint.x - startPoint.x > opts.offset && currentIndex !== 0) {
     jumpToIndex(--currentIndex);
   } else {
-    const distance = Math.pow(startPoint.x - touch.clientX, 2) + Math.pow(startPoint.y - touch.clientY, 2);
+    const distance = Math.pow(startPoint.x - endPoint.x, 2) + Math.pow(startPoint.y - endPoint.y, 2);
     //滑动距离不超过10像素，且时间小于300ms则隐藏图片
     if (distance < Math.pow(10, 2) && new Date().getTime() - startPoint.time < 300) {
       if (opts.clickToHide) {
         removeItems();
       }
     } else {
-      galleryContainer.style.transform = `translateX(${-currentIndex * window.screen.width}px)`;
+      galleryContainer.style.transform = `translateX(${-currentIndex * opts.containerEle.offsetWidth}px)`;
     }
   }
 }
 
 function jumpToIndex(index) {
   galleryContainer.style.transition = 'transform 100ms';
-  galleryContainer.style.transform = `translateX(${-index * window.screen.width}px)`;
+  galleryContainer.style.transform = `translateX(${-index * opts.containerEle.offsetWidth}px)`;
   setOptionalRender(index);
   ensurePictureVisible(index);
   if (opts.smoothly) {
@@ -157,4 +193,4 @@ function removeItems() {
 }
 
 // export default previewImage;
-module.exports = previewImage;
+// module.exports = previewImage;

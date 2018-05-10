@@ -1,6 +1,6 @@
 {
   "name": "m-preview-image",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "description": "preview image in mobile",
   "main": "dist/previewImage.js",
   "scripts": {
