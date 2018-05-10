@@ -193,4 +193,4 @@ function removeItems() {
 }
 
 // export default previewImage;
-// module.exports = previewImage;
+module.exports = previewImage;
