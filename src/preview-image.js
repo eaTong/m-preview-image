@@ -29,7 +29,8 @@
         console.error('error index ');
         return;
       }
-      this.opts = {...DEFAULT_OPTIONS, ...options};
+      // this.opts = {...DEFAULT_OPTIONS, ...options};
+      this.opts = Object.assign({}, DEFAULT_OPTIONS, options);
       this.container = null;
       this.galleryContainer = null;
       this.startPoint = {x: 0, y: 0, time: new Date().getTime()};
