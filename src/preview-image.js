@@ -68,7 +68,7 @@ function initDOM() {
 function generateContainer() {
   let str = '';
   for (let index in opts.urls) {
-    str += `<div class="image-cover loading ${opts.transition}" style="width:${opts.containerEle.offsetWidth}px;height:${opts.containerEle.offsetWidth}px" \
+    str += `<div class="image-cover loading ${opts.transition}" style="width:${opts.containerEle.offsetWidth}px;height:${opts.containerEle.offsetHeight}px" \
        id="preview-image-container-id${index}"><img draggable="false"/></div>`;
   }
   return str;
