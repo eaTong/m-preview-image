@@ -9,11 +9,11 @@
 
 ## how to get?
 
-- in browser : download and add a tag :`<script src="path-to/preview-image.js">` 
+- in browser : download and add a tag :`<script src="path-to/preview-image-v2.js">` 
 - using node : 
 > npm i m-preview-image -S 
 >
-> const  previewImage = require('m-preview-image');
+> const  previewImageV2 = require('m-preview-image');
 
 don't forget to import style :`import "m-preview-image/dist/m-preview-image.css"`
 ## how to use?
@@ -25,7 +25,7 @@ first you should have a url list just like:
       "http://139.129.33.188:8000/file/read/8424,426a140245c811e78eab00163e002820,common"
     ];
       
-and then call ` previewImage({urls: urls});` when you want to preview images
+and then call ` previewImageV2({urls: urls});` when you want to preview images
 
 urls can also be a list of object , when you give me a list of object , key of url should be `url`,just like :
 
