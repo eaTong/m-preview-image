@@ -9,7 +9,7 @@
 
 ## how to get?
 
-- in browser : download and add a tag :`<script src="path-to/preview-image-v2.js">` 
+- in browser : download and add a tag :`<script src="path-to/preview-image.js">` 
 - using node : 
 > npm i m-preview-image -S 
 >
@@ -25,7 +25,7 @@ first you should have a url list just like:
       "http://139.129.33.188:8000/file/read/8424,426a140245c811e78eab00163e002820,common"
     ];
       
-and then call ` previewImageV2({urls: urls});` when you want to preview images
+and then call ` new PreviewImage({urls: urls}).preview();` when you want to preview images
 
 urls can also be a list of object , when you give me a list of object , key of url should be `url`,just like :
 
@@ -56,7 +56,7 @@ urls can also be a list of object , when you give me a list of object , key of u
       
 param `optionalRender` can allows you DIY you own render,such as render your own progress.
 
-`optionalRender`can now auto replace `{index}` to current index , `{total}` to tatal length of all url,or you can pass a function and return the html you want to render
+`optionalRender`can now auto replace `{index}` to current index , `{total}` to total length of all url,or you can pass a function and return the html you want to render
    
     
 
