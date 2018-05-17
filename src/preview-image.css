@@ -11,6 +11,10 @@
     -ms-transform: rotate(360deg);
     -o-transform: rotate(360deg);
     transform: rotate(360deg); } }
+html, body {
+  margin: 0;
+  padding: 0; }
+
 .preview-image-root-container {
   position: absolute;
   top: 0;
@@ -19,6 +23,13 @@
   right: 0;
   z-index: 999;
   background-color: rgba(0, 0, 0, 0.3); }
+  .preview-image-root-container.preview-in-body {
+    width: 100vw;
+    height: 100vh;
+    position: fixed; }
+  .preview-image-root-container.preview-inside {
+    width: 100%;
+    height: 100%; }
   .preview-image-root-container > * {
     user-select: none;
     -moz-user-select: none;

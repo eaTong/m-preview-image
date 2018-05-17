@@ -38,13 +38,18 @@
       this.unionKey = Math.random();
     }
 
+    isPreviewInBody() {
+      return this.opts.containerEle.tagName === 'BODY';
+    }
+
     preview() {
-      this.container = document.createElement('div');
-      this.container.className = 'preview-image-root-container';
+      const previewInBody =
+        this.container = document.createElement('div');
+      this.container.className = `preview-image-root-container ${this.isPreviewInBody() ? 'preview-in-body' : 'preview-inside'}`;
       this.opts.containerEle.style.position = 'relative';
       this.opts.containerEle.style.overflow = 'hidden';
-      this.container.innerHTML = `<div class="preview-image-container" id="preview-image-container~${this.unionKey}">${this.generateContainer()}</div>\
-                          <div class="optional-render"></div>`;
+      this.container.innerHTML = `<div class="preview-image-container" id="preview-image-container~${this.unionKey}">\
+        ${this.generateContainer()}</div><div class="optional-render"></div>`;
       this.opts.containerEle.appendChild(this.container);
       this.galleryContainer = document.getElementById(`preview-image-container~${this.unionKey}`);
       this.galleryContainer.style.width = `${this.opts.urls.length * this.opts.containerEle.offsetWidth}px`;
@@ -127,7 +132,8 @@
 
     jumpToIndex(index) {
       this.galleryContainer.style.transition = 'transform 100ms';
-      this.galleryContainer.style.transform = `translateX(${-index * this.opts.containerEle.offsetWidth}px)`;
+      const containerWidth = this.isPreviewInBody() ? document.body.offsetWidth : this.opts.containerEle.offsetWidth;
+      this.galleryContainer.style.transform = `translateX(${-index * containerWidth}px)`;
       this.setOptionalRender(index);
       this.ensurePictureVisible(index);
       if (this.opts.smoothly) {
@@ -138,9 +144,11 @@
 
     generateContainer() {
       let str = '';
+      const width = this.isPreviewInBody() ? '100vw' : `${this.opts.containerEle.offsetWidth}px`;
+      const height = this.isPreviewInBody() ? '100vh' : `${this.opts.containerEle.offsetHeight}px`;
       for (let index in this.opts.urls) {
         str += `<div class="image-cover loading ${this.opts.transition}"\
-        style="width:${this.opts.containerEle.offsetWidth}px;height:${this.opts.containerEle.offsetHeight}px" \
+        style="width:${width};height:${height}" \
        id="preview-image-container-id${index}~${this.unionKey}"><img draggable="false"/></div>`;
       }
       return str;
