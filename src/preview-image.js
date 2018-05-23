@@ -163,7 +163,7 @@
         } else if (typeof item.optionalRender === 'function') {
           optRender = item.optionalRender(index, this.opts.urls.length);
         }
-        this.container.getElementsByClassName('optional-render')[0].style.display = 'block';
+        this.container.getElementsByClassName('optional-render')[0].style.display = 'inline-block';
         this.container.getElementsByClassName('optional-render')[0].innerHTML = optRender;
       } else {
         this.container.getElementsByClassName('optional-render')[0].style.display = 'none';
