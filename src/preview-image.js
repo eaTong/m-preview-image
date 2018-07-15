@@ -14,7 +14,8 @@
     urlLabel: 'url',
     //use your own container
     containerEle: document.body,
-    picUrl: picUrl
+    picUrl: picUrl,
+    onImageHidden:function(){}
   };
 
   class PreviewImage {
@@ -202,6 +203,7 @@
       if (this.isPreviewInBody()) {
         this.opts.containerEle.style.overflow = 'auto';
       }
+      this.opts.onImageHidden();
     }
 
   }

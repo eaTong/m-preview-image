@@ -1,6 +1,6 @@
 {
   "name": "m-preview-image",
-  "version": "3.0.4",
+  "version": "3.0.5",
   "description": "preview image in mobile",
   "main": "dist/previewImage.js",
   "scripts": {
@@ -16,7 +16,7 @@
     "mobile"
   ],
   "author": "eaTong",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/eaTong/m-preview-image/issues"
   },
