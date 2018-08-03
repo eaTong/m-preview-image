@@ -197,11 +197,13 @@
     }
 
     removeItems() {
-      this.container.parentNode.removeChild(this.container);
-      this.container = undefined;
-      this.galleryContainer = undefined;
-      if (this.isPreviewInBody()) {
-        this.opts.containerEle.style.overflow = 'auto';
+      if(this.container){
+        this.container.parentNode.removeChild(this.container);
+        this.container = undefined;
+        this.galleryContainer = undefined;
+        if (this.isPreviewInBody()) {
+          this.opts.containerEle.style.overflow = 'auto';
+        }
       }
       this.opts.onImageHidden();
     }
