@@ -7,7 +7,6 @@
     urls: [],
     //sometime you may not want your customer to close the preview themselves , then you may give me `false`
     clickToHide: true,
-    transition: 'slide',
     //当滑动距离大于此值的时候触发上一个或者下一个
     offset: 75,
     smoothly: true,
@@ -15,7 +14,8 @@
     //use your own container
     containerEle: document.body,
     picUrl: picUrl,
-    onImageHidden:function(){}
+    onImageHidden: function () {
+    }
   };
 
   class PreviewImage {
@@ -37,6 +37,11 @@
       this.startPoint = {x: 0, y: 0, time: new Date().getTime()};
       this.currentIndex = options.index || 0;
       this.unionKey = Math.random();
+
+      this.onTouchStart = this.onTouchStart.bind(this);
+      this.onTouchMove = this.onTouchMove.bind(this);
+      this.onTouchEnd = this.onTouchEnd.bind(this);
+      this.onMouseOut = this.onMouseOut.bind(this);
     }
 
     isPreviewInBody() {
@@ -56,24 +61,20 @@
       this.galleryContainer.style.width = `${this.opts.urls.length * this.opts.containerEle.offsetWidth}px`;
 
 
-      this.galleryContainer.addEventListener('touchstart', this.handlerTouchStart.bind(this));
-      this.galleryContainer.addEventListener('mousedown', this.handlerTouchStart.bind(this));
-      this.galleryContainer.addEventListener('touchmove', this.handlerTouchMove.bind(this));
-      this.galleryContainer.addEventListener('mousemove', this.handlerTouchMove.bind(this));
-      this.galleryContainer.addEventListener('touchend', this.handlerTouchEnd.bind(this));
-      this.galleryContainer.addEventListener('mouseup', this.handlerTouchEnd.bind(this));
-      this.galleryContainer.addEventListener('mouseout', this.handlerMouseOut.bind(this));
-      // setOptionalRender(currentIndex);
+      this.galleryContainer.addEventListener('touchstart', this.onTouchStart.bind(this));
+      this.galleryContainer.addEventListener('mousedown', this.onTouchStart.bind(this));
+      this.galleryContainer.addEventListener('touchmove', this.onTouchMove.bind(this));
+      this.galleryContainer.addEventListener('mousemove', this.onTouchMove.bind(this));
+      this.galleryContainer.addEventListener('touchend', this.onTouchEnd.bind(this));
+      this.galleryContainer.addEventListener('mouseup', this.onTouchEnd.bind(this));
+      this.galleryContainer.addEventListener('mouseout', this.onMouseOut.bind(this));
       this.jumpToIndex(this.currentIndex);
     }
 
-    handlerTouchStart(event) {
+    onTouchStart(event) {
       if (event.type === 'mousedown') {
-
-        this.galleryContainer.style.transition = 'none';
         this.startPoint = {x: event.x, y: event.y, time: new Date().getTime(), moving: true};
       } else {
-        this.galleryContainer.style.transition = 'none';
         this.startPoint = {
           x: event.touches[0].clientX,
           y: event.touches[0].clientY,
@@ -83,25 +84,23 @@
       }
     }
 
-    handlerTouchMove(event) {
+    onTouchMove(event) {
       if (this.startPoint.moving) {
         if (event.type === 'mousemove') {
-
           this.galleryContainer.style.transform = `translateX(${event.x - this.startPoint.x - this.currentIndex * this.opts.containerEle.offsetWidth}px)`;
         } else {
-
           const touche = event.touches[0];
           this.galleryContainer.style.transform = `translateX(${touche.clientX - this.startPoint.x - this.currentIndex * this.opts.containerEle.offsetWidth}px)`;
         }
       }
     }
 
-    handlerMouseOut(event) {
+    onMouseOut(event) {
       this.startPoint.moving = false;
       this.jumpToIndex(this.currentIndex);
     }
 
-    handlerTouchEnd(event) {
+    onTouchEnd(event) {
       this.startPoint.moving = false;
       event.preventDefault();
       const endPoint = {};
@@ -132,7 +131,6 @@
     }
 
     jumpToIndex(index) {
-      this.galleryContainer.style.transition = 'transform 100ms';
       const containerWidth = this.isPreviewInBody() ? document.body.offsetWidth : this.opts.containerEle.offsetWidth;
       this.galleryContainer.style.transform = `translateX(${-index * containerWidth}px)`;
       this.setOptionalRender(index);
@@ -148,7 +146,7 @@
       const width = this.isPreviewInBody() ? '100vw' : `${this.opts.containerEle.offsetWidth}px`;
       const height = this.isPreviewInBody() ? '100vh' : `${this.opts.containerEle.offsetHeight}px`;
       for (let index in this.opts.urls) {
-        str += `<div class="image-cover loading ${this.opts.transition}"\
+        str += `<div class="image-cover loading "\
         style="width:${width};height:${height}" \
        id="preview-image-container-id${index}~${this.unionKey}"><img draggable="false"/></div>`;
       }
@@ -197,7 +195,7 @@
     }
 
     removeItems() {
-      if(this.container){
+      if (this.container) {
         this.container.parentNode.removeChild(this.container);
         this.container = undefined;
         this.galleryContainer = undefined;

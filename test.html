@@ -8,8 +8,8 @@
   <meta name="renderer" content="webkit">
   <link rel="stylesheet" href="src/preview-image.css">
 
-  <div style="width: 400px;height: 400px;position: relative" id="container"></div>
-  <div style="width: 400px;height: 400px;position: relative;margin-top: 10px;" id="container2"></div>
+  <button onclick="preview()">preview</button>
+
 </head>
 <body>
 <script src="src/preview-image.js"></script>
@@ -51,10 +51,13 @@
     "http://139.129.33.188:8000/file/read/8421,426209ce45c811e78eab00163e002820,common",
     "http://139.129.33.188:8000/file/read/8424,426a140245c811e78eab00163e002820,common",
   ];
-  // PreviewImage.preview(urls, {index: 0, clickToHide: false});
-  new PreviewImage({urls: urls, index: 0, containerEle: document.getElementById('container')}).preview();
-  new PreviewImage({urls: urls2, index: 0}).preview();
 
+  // PreviewImage.preview(urls, {index: 0, clickToHide: false});
+
+
+  function preview() {
+    new PreviewImage({urls: urls, index: 0}).preview();
+  }
 
 </script>
 </body>

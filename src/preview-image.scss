@@ -51,6 +51,7 @@ html, body {
     height: 100%;
     position: relative;
     z-index: 9;
+    transition: all 100ms linear;
 
     .image-cover {
       width: 100%;

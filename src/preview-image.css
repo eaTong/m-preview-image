@@ -38,7 +38,8 @@ html, body {
   .preview-image-root-container .preview-image-container {
     height: 100%;
     position: relative;
-    z-index: 9; }
+    z-index: 9;
+    transition: all 100ms linear; }
     .preview-image-root-container .preview-image-container .image-cover {
       width: 100%;
       height: 100%;
