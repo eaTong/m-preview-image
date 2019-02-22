@@ -1,22 +1,25 @@
 ;(function (root, undefined) {
   const picUrl = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAYCAQAAABHYIU0AAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QAAKqNIzIAAAAJcEhZcwAAAfQAAAH0AMQEOAcAAAAHdElNRQffCAIWOxJiZcaiAAABxUlEQVQ4y53UPUjVYRzF8c+tmxgqFYmIRbS21BC9GGJKJrbWELSUYBEaDe0NOVTU2GJhQYEQVBCuTW5BFFHGrXypyBDJKDOh0uuv4Xq913dvZ3ng8Hz/5zxv/4TnqkwrXGuMJFWq/A8UEkmBe3qsLQBLq9YiGBKaC049LgwnYZWp6zTZ7akn0hkiWUDaUZ1K/XBSd3bPVq9GpdioIWsUAqdmxrdZY7HaO332fRH/jk2q9ejKWUNCS96UIz64pWyJ9OKZ8YQwPL92ow7btbisZMFeb8XvfGsu3OCmbb6a0qrd+jnz2nSrm18kV7vegPBSrevSplyZLZnQZlx4pya/dg4+qF94bQ9K3BAmtStCwlk/hQkhpXo+3Gy/98Ib+2a+XKZD+OOiYqeNCY8dkxJ67Z0Ld+oVUg7kLWeD28KER74J3bagVp/wyq7M3c7Af+esJ6tN7goxi0KdAeGZa9JZOPSpXeRUN+sSwiWJWe+QQeFXLrlf/RKXotx9Ydz5vEM97KPIwRcsrQoPhXGteelNPuXgU5ZTuQfCmDN53rncz6DG5DLva9oLtSpcVWlQAmk7MnfniyorKfIq5zSSNKpIrIgvVMLoP/x1qQweYb+nAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE3LTExLTEyVDExOjEwOjE2KzA4OjAwRvrOyQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxNS0wOC0wMlQyMjo1OToxOCswODowMPgtuC0AAABNdEVYdHNvZnR3YXJlAEltYWdlTWFnaWNrIDcuMC4xLTYgUTE2IHg4Nl82NCAyMDE2LTA5LTE3IGh0dHA6Ly93d3cuaW1hZ2VtYWdpY2sub3Jn3dmlTgAAABh0RVh0VGh1bWI6OkRvY3VtZW50OjpQYWdlcwAxp/+7LwAAABh0RVh0VGh1bWI6OkltYWdlOjpIZWlnaHQAMTU1coyr+gAAABd0RVh0VGh1bWI6OkltYWdlOjpXaWR0aAAxOTejxtWHAAAAGXRFWHRUaHVtYjo6TWltZXR5cGUAaW1hZ2UvcG5nP7JWTgAAABd0RVh0VGh1bWI6Ok1UaW1lADE0Mzg1Mjc1NThTJFqXAAAAEnRFWHRUaHVtYjo6U2l6ZQAyLjM1S0JN0kRMAAAAX3RFWHRUaHVtYjo6VVJJAGZpbGU6Ly8vaG9tZS93d3dyb290L3NpdGUvd3d3LmVhc3lpY29uLm5ldC9jZG4taW1nLmVhc3lpY29uLmNuL3NyYy8xMTkwOS8xMTkwOTQzLnBuZ94F5egAAAAASUVORK5CYII=';
 
-  const DEFAULT_OPTIONS = {
-    index: 0,
-    // required
-    urls: [],
-    //sometime you may not want your customer to close the preview themselves , then you may give me `false`
-    clickToHide: true,
-    //当滑动距离大于此值的时候触发上一个或者下一个
-    offset: 75,
-    smoothly: true,
-    urlLabel: 'url',
-    //use your own container
-    containerEle: document.body,
-    picUrl: picUrl,
-    onImageHidden: function () {
-    }
-  };
+  function getOption(options) {
+    const DEFAULT_OPTIONS = {
+      index: 0,
+      // required
+      urls: [],
+      //sometime you may not want your customer to close the preview themselves , then you may give me `false`
+      clickToHide: true,
+      //当滑动距离大于此值的时候触发上一个或者下一个
+      offset: 75,
+      smoothly: true,
+      urlLabel: 'url',
+      //use your own container
+      containerEle: document.body,
+      picUrl: picUrl,
+      onImageHidden: function () {
+      }
+    };
+    return Object.assign({}, DEFAULT_OPTIONS, options);
+  }
 
   class PreviewImage {
     constructor(options) {
@@ -30,8 +33,7 @@
         console.error('error index ');
         return;
       }
-      // this.opts = {...DEFAULT_OPTIONS, ...options};
-      this.opts = Object.assign({}, DEFAULT_OPTIONS, options);
+      this.opts = getOption(options);
       this.container = null;
       this.galleryContainer = null;
       this.startPoint = {x: 0, y: 0, time: new Date().getTime()};
@@ -49,8 +51,7 @@
     }
 
     preview() {
-      const previewInBody =
-        this.container = document.createElement('div');
+      this.container = document.createElement('div');
       this.container.className = `preview-image-root-container ${this.isPreviewInBody() ? 'preview-in-body' : 'preview-inside'}`;
       this.opts.containerEle.style.position = 'relative';
       this.opts.containerEle.style.overflow = 'hidden';
@@ -61,13 +62,13 @@
       this.galleryContainer.style.width = `${this.opts.urls.length * this.opts.containerEle.offsetWidth}px`;
 
 
-      this.galleryContainer.addEventListener('touchstart', this.onTouchStart.bind(this));
-      this.galleryContainer.addEventListener('mousedown', this.onTouchStart.bind(this));
-      this.galleryContainer.addEventListener('touchmove', this.onTouchMove.bind(this));
-      this.galleryContainer.addEventListener('mousemove', this.onTouchMove.bind(this));
-      this.galleryContainer.addEventListener('touchend', this.onTouchEnd.bind(this));
-      this.galleryContainer.addEventListener('mouseup', this.onTouchEnd.bind(this));
-      this.galleryContainer.addEventListener('mouseout', this.onMouseOut.bind(this));
+      this.galleryContainer.addEventListener('touchstart', this.onTouchStarton);
+      this.galleryContainer.addEventListener('mousedown', this.onTouchStarton);
+      this.galleryContainer.addEventListener('touchmove', this.onTouchMoveon);
+      this.galleryContainer.addEventListener('mousemove', this.onTouchMoveon);
+      this.galleryContainer.addEventListener('touchend', this.onTouchEndon);
+      this.galleryContainer.addEventListener('mouseup', this.onTouchEndon);
+      this.galleryContainer.addEventListener('mouseout', this.onMouseOuton);
       this.jumpToIndex(this.currentIndex);
     }
 
@@ -205,7 +206,6 @@
       }
       this.opts.onImageHidden();
     }
-
   }
 
   // ....
