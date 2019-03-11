@@ -62,13 +62,13 @@
       this.galleryContainer.style.width = `${this.opts.urls.length * this.opts.containerEle.offsetWidth}px`;
 
 
-      this.galleryContainer.addEventListener('touchstart', this.onTouchStarton);
-      this.galleryContainer.addEventListener('mousedown', this.onTouchStarton);
-      this.galleryContainer.addEventListener('touchmove', this.onTouchMoveon);
-      this.galleryContainer.addEventListener('mousemove', this.onTouchMoveon);
-      this.galleryContainer.addEventListener('touchend', this.onTouchEndon);
-      this.galleryContainer.addEventListener('mouseup', this.onTouchEndon);
-      this.galleryContainer.addEventListener('mouseout', this.onMouseOuton);
+      this.galleryContainer.addEventListener('touchstart', this.onTouchStart);
+      this.galleryContainer.addEventListener('mousedown', this.onTouchStart);
+      this.galleryContainer.addEventListener('touchmove', this.onTouchMove);
+      this.galleryContainer.addEventListener('mousemove', this.onTouchMove);
+      this.galleryContainer.addEventListener('touchend', this.onTouchEnd);
+      this.galleryContainer.addEventListener('mouseup', this.onTouchEnd);
+      this.galleryContainer.addEventListener('mouseout', this.onMouseOut);
       this.jumpToIndex(this.currentIndex);
     }
 
