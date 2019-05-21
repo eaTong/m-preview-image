@@ -59,8 +59,7 @@
         ${this.generateContainer()}</div><div class="optional-render"></div>`;
       this.opts.containerEle.appendChild(this.container);
       this.galleryContainer = document.getElementById(`preview-image-container~${this.unionKey}`);
-      this.galleryContainer.style.width = `${this.opts.urls.length * this.opts.containerEle.offsetWidth}px`;
-
+      this.galleryContainer.style.width = `${this.opts.urls.length * this.opts.containerEle.offsetWidth + 2}px`;
 
       this.galleryContainer.addEventListener('touchstart', this.onTouchStart);
       this.galleryContainer.addEventListener('mousedown', this.onTouchStart);
