@@ -16,6 +16,8 @@
       containerEle: document.body,
       picUrl: picUrl,
       onImageHidden: function () {
+      },
+      onChangePic: function () {
       }
     };
     return Object.assign({}, DEFAULT_OPTIONS, options);
@@ -139,6 +141,7 @@
         this.ensurePictureVisible(Math.max(0, index - 1));
         this.ensurePictureVisible(Math.min(index + 1, this.opts.urls.length - 1));
       }
+      this.opts.onChangePic && this.opts.onChangePic(index)
     }
 
     generateContainer() {
